@@ -15,11 +15,6 @@ $app = new \Slim\App(['settings' => ['displayErrorDetails' => true]]);
 
 $app->group('/api', function () {
 
-    $this->map(['GET'], '/test', function ($req, $res, $args) {
-        $donationsNews = \Aldonato\Models\RequestsNews::all()->first();
-        return $res->withStatus(200)->withJson($donationsNews->request()->get());
-    });
-
     $this->map(['GET'], '/accounts', function ($req, $res, $args) {
         $accounts = \Aldonato\Models\Account::all();
         return $res->withStatus(200)->withJson($accounts);
@@ -105,7 +100,16 @@ $app->group('/api', function () {
     $this->map(['GET'], '/requests/{id:[0-9]+}', function ($req, $res, $args) {
         $request = \Aldonato\Models\Request::find($args['id']);
         if ($request)
+        {
+            $currentAmount = 0;
+            $donations = $request->donations()->get();
+            foreach ($donations as $donation){
+                $currentAmount += $donation->amount;
+            }
+            $request->currentAmount = $currentAmount;
             return $res->withStatus(200)->withJson($request);
+        }
+
         else
             return $res->withStatus(404)->withJson(['msg' => 'no request founds']);
     });

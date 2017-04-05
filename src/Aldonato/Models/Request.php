@@ -13,6 +13,7 @@ class Request extends \Illuminate\Database\Eloquent\Model
 {
     public $timestamps = false;
     protected $fillable = ['account_id', 'description', 'date', 'amount', 'limit_date', 'picture', 'status'];
+    protected $currentAmount = 0;
 
     public function account()
     {
