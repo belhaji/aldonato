@@ -12,6 +12,7 @@ namespace Aldonato\Models;
 class Donation extends \Illuminate\Database\Eloquent\Model
 {
     public $timestamps = false;
+    protected $fillable = ['account_id', 'request_id', 'amount','date', 'public', 'receiver_id'];
 
     public function account()
     {

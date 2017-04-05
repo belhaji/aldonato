@@ -7,6 +7,7 @@ class DonationsNews extends \Illuminate\Database\Eloquent\Model
 {
 
     public $timestamps = false;
+    protected $fillable = [ 'account_id','donation_id', 'date'];
 
     public function account()
     {

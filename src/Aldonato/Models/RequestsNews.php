@@ -8,6 +8,8 @@ class RequestsNews extends \Illuminate\Database\Eloquent\Model
 
     public $timestamps = false;
 
+    protected $fillable = ['request_id', 'account_id', 'date'];
+
     public function account()
     {
         return $this->belongsTo('Aldonato\Models\Account');
