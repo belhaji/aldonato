@@ -29,7 +29,7 @@ CREATE TABLE `accounts` (
   `name` varchar(255) NOT NULL,
   `category` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `accounts` (
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` VALUES (1,'updated','test','test','user'),(2,'test2','test2','test2','assoc'),(3,'post test','test','test','user');
+INSERT INTO `accounts` VALUES (1,'sidaaction','sidaaction','SIDA ACTION 2017','association'),(2,'nsc','nsc','National Solidarity Campaign 2017','association'),(3,'csp','csp','Child Sponsorship Campaign 2017','association'),(4,'faefa','faefa','Financing an ambulance equipped for first aid','association'),(5,'aldonatouser','aldo','Test Aldonato User','user');
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -64,7 +64,7 @@ CREATE TABLE `donations` (
   CONSTRAINT `donations_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`),
   CONSTRAINT `donations_ibfk_2` FOREIGN KEY (`request_id`) REFERENCES `requests` (`id`),
   CONSTRAINT `donations_ibfk_3` FOREIGN KEY (`receiver_id`) REFERENCES `accounts` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +73,6 @@ CREATE TABLE `donations` (
 
 LOCK TABLES `donations` WRITE;
 /*!40000 ALTER TABLE `donations` DISABLE KEYS */;
-INSERT INTO `donations` VALUES (1,1,1,199.99,'2017-04-13',1,NULL),(2,1,2,19,'2017-04-20',1,NULL);
 /*!40000 ALTER TABLE `donations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,7 +89,7 @@ CREATE TABLE `donations_news` (
   `account_id` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,7 +98,6 @@ CREATE TABLE `donations_news` (
 
 LOCK TABLES `donations_news` WRITE;
 /*!40000 ALTER TABLE `donations_news` DISABLE KEYS */;
-INSERT INTO `donations_news` VALUES (1,1,1,'2017-04-19'),(2,2,1,'2017-04-20');
 /*!40000 ALTER TABLE `donations_news` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -113,8 +111,10 @@ DROP TABLE IF EXISTS `requests`;
 CREATE TABLE `requests` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `account_id` int(11) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
   `description` text,
-  `date` date DEFAULT NULL,
+  `sdate` date DEFAULT NULL,
+  `edate` date DEFAULT NULL,
   `amount` double DEFAULT NULL,
   `limit_date` date DEFAULT NULL,
   `picture` varchar(255) DEFAULT NULL,
@@ -122,7 +122,7 @@ CREATE TABLE `requests` (
   PRIMARY KEY (`id`),
   KEY `account_id` (`account_id`),
   CONSTRAINT `requests_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -131,7 +131,7 @@ CREATE TABLE `requests` (
 
 LOCK TABLES `requests` WRITE;
 /*!40000 ALTER TABLE `requests` DISABLE KEYS */;
-INSERT INTO `requests` VALUES (1,1,'test desc','2017-04-06',122.9999,'2017-04-20',NULL,0),(2,1,'sasasa','2017-04-11',19862,'2017-04-13',NULL,0),(3,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(4,1,'test hello','2017-04-06',122.99,'2017-04-20',NULL,1),(5,1,'test hello','2017-04-06',122.99,'2017-04-20',NULL,1),(6,1,'test hello','2017-04-06',122.99,'2017-04-20',NULL,1);
+INSERT INTO `requests` VALUES (1,1,'SIDA ACTION 2017','SIDA ACTION 2017','2017-01-01','2017-05-01',15000,NULL,'/uploads/sida.png',1),(2,2,'National Solidarity Campaign 2017','National Solidarity Campaign 2017','2017-02-01','2017-06-30',9999999,NULL,'/uploads/m5_2.png',1),(3,3,'Child Sponsorship Campaign 2017','Child Sponsorship Campaign 2017','2016-12-01','2017-12-12',10000000,NULL,'/uploads/sos.png',1),(4,4,'Financing an ambulance equipped for first aid','Financing an ambulance equipped for first aid','2017-04-04','2017-08-04',330,NULL,'/uploads/croix_2.png',1);
 /*!40000 ALTER TABLE `requests` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,7 +148,7 @@ CREATE TABLE `requests_news` (
   `account_id` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,7 +157,7 @@ CREATE TABLE `requests_news` (
 
 LOCK TABLES `requests_news` WRITE;
 /*!40000 ALTER TABLE `requests_news` DISABLE KEYS */;
-INSERT INTO `requests_news` VALUES (1,1,1,'2017-04-04'),(2,2,1,'2017-04-06');
+INSERT INTO `requests_news` VALUES (1,1,1,'2017-01-01'),(2,2,2,'2017-01-25'),(3,3,3,'2016-12-29'),(4,4,4,'2017-04-01');
 /*!40000 ALTER TABLE `requests_news` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -170,4 +170,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-05  9:21:21
+-- Dump completed on 2017-04-06  9:04:59
